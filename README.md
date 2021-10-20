@@ -26,7 +26,7 @@ is the detail of add up of voting address, USDC
  - Maximum connection rate per 10 seconds per IP: 40
  - Maximum amount of data per 30 second: 100 MB
 
-## improvement
+## Improvement
 
  - We can use Solana Python SDK.
  - More efficient.
