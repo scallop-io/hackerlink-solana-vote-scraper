@@ -15,7 +15,7 @@ Voteaccount = "BVCaVh8mNzYgorruQJ7QvSg4PuggAfdbC71Qu5GNGRA8"
 
 headers = {'Content-Type': 'application/json'}
 
-url = 'https://api.mainnet-beta.solana.com'
+rpcurl = 'https://api.mainnet-beta.solana.com' # RPC Node URL
 
 pathtx = 'ignition_asia_tx.txt'
 pathaddup = 'ignition_asia_addup.txt'
@@ -102,7 +102,7 @@ def main():
             # break
             data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "before":"'+ lastesttx +'"}]}'
 
-        req = requests.post(url, headers=headers, data=data)
+        req = requests.post(rpcurl, headers=headers, data=data)
         reqjson = json.loads(req.text)
 
         try:
@@ -124,7 +124,7 @@ def main():
                     datajson = json.loads(data)
                     datajson["params"][0] = tx
                     data = json.dumps(datajson)
-                    votingreq = requests.post(url, headers=headers, data=data) # Send new req for details.
+                    votingreq = requests.post(rpcurl, headers=headers, data=data) # Send new req for details.
                     sleep(1)
                     # print(votingreq.text)
 
