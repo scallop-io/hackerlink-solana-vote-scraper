@@ -122,7 +122,7 @@ def main():
                     datajson["params"][0] = tx
                     data = json.dumps(datajson)
                     votingreq = requests.post(rpcurl, headers=headers, data=data) # Send new req for details.
-                    sleep(1)
+                    sleep(0.1)
                     # print(votingreq.text)
 
                     countvoteusdc(votingreq,tx)
