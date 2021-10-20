@@ -35,3 +35,4 @@ https://solana-api.projectserum.com - Project Serum-hosted api node
  - We can use Solana Python SDK.
  - More efficient.
  - More readable.
+ - We can use txt to store tx and no need to send many requests every time
