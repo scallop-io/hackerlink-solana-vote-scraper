@@ -21,6 +21,7 @@ is the detail of add up of voting address, USDC
 ## RPC Node Rate Limits
 
 https://api.mainnet-beta.solana.com - Solana-hosted api node cluster, backed by a load balancer; rate-limited
+
 https://solana-api.projectserum.com - Project Serum-hosted api node
 
  - Maximum number of requests per 10 seconds per IP: 100
