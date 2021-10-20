@@ -29,9 +29,6 @@ outarr = []
 def arruni(listA):  # delet repeat things
 	return sorted(set(listA), key=listA.index)
 
-def voteoutput(list):  # address voted USDC add up function
-    pass
-
 def noneto0(num):
     try:
         num = int(num)
@@ -54,7 +51,7 @@ def countvoteusdc(votingreq,tx):
     #     print(tx, "This tx is not a voting tx")
 
 
-def voteoutput(outarr):
+def voteoutput(outarr):  # address voted USDC add up function
 
     output = []
 
