@@ -4,7 +4,7 @@ import math
 from time import sleep
 from datetime import datetime
 
-Voteaccount = "BVCaVh8mNzYgorruQJ7QvSg4PuggAfdbC71Qu5GNGRA8"
+Voteaccount = "3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7"
 
 # Solana Ignition Hackathon East Asia 
 # 3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
