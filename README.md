@@ -8,15 +8,17 @@ This is the voting account for Scallop at Solana Ignition Hackathon East Asia
 
 https://explorer.solana.com/address/3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
 
-## Output
+## How to use
 
-`pathtx = 'ignition_asia_tx.txt'`
+`ignition_update.py`
 
-is the detail of each voting transaction, include address, USDC, signature
+`ignition_addup.py`
 
-`pathaddup = 'ignition_asia_addup.txt'`
+`backuptojson.py`
 
-is the detail of add up of voting address, USDC
+`final_list.py`
+
+And out put is in `ignition_addup_final.txt`
 
 ## RPC Node Rate Limits
 

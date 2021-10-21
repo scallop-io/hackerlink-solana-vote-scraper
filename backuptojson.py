@@ -1,8 +1,8 @@
 import re
 import json
 
-backuppath = open('ignition_list_backup.txt', 'r')
-backupjson = open('ignition_list_backup.json', 'w')
+backuppath = open('ignition_addup_new.txt', 'r')
+backupjson = open('ignition_list.json', 'w')
 
 def usdcfilter(str):
     str = re.sub(r"\s+", "", str)
@@ -10,9 +10,10 @@ def usdcfilter(str):
     str = str.replace(" ", "")
     return str
 
-firstline = backuppath.read()
 
-result = re.split('[\']', firstline)
+listtext = backuppath.read()
+
+result = re.split('[\']', listtext)
 
 outjson = []
 
