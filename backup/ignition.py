@@ -50,9 +50,27 @@ def countvoteusdc(votingreq, tx):
         voterusdc = voterusdcbefore - voterusdcafter
         outarr.append([[voteraddress, voterusdc], [tx]])
         txtout = voteraddress, voterusdc*math.pow(10, -6), tx
+
         print(txtout, file=txfile)
+
     # else:
     #     print(tx, "This tx is not a voting tx")
+
+
+def outputjson(outarr):
+    backupjson = open('ignition_list.json', 'w+')
+    outjson = []
+    for tx in outarr:
+        data = {}
+        data["address"] = tx[0][0]
+        data["VoteUSDC"] = tx[0][1]*math.pow(10, -6)
+        data["signature"] = tx[1]
+        outjson.append(data)
+    output = json.dumps(outjson)
+    backupjson.write(output)
+    backupjson.close()
+
+
 
 
 def voteoutput(outarr):  # address voted USDC add up function
@@ -87,10 +105,17 @@ def voteoutput(outarr):  # address voted USDC add up function
     return outputsort
 
 
+def addupout(outarr):
+    addupusdc = 0
+    for addusd in outarr:
+        addupusdc += addusd[0][1]
+    print("Add up USDC:", addupusdc*math.pow(10, -6), file=txfile)
+
+
 def main():
 
     today = datetime.now()
-    # print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
+    print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
     print(today.strftime("%Y-%m-%d %H:%M:%S"), file=addupfile)
 
     lastesttx = ""
@@ -132,7 +157,7 @@ def main():
                     # Send new req for details.
                     votingreq = requests.post(
                     	rpcurl, headers=headers, data=data)
-                    sleep(0.1)
+                    sleep(0.15)
                     # print(votingreq.text)
 
                     countvoteusdc(votingreq, tx)
@@ -140,6 +165,10 @@ def main():
         else:
             print("We've hit the bottom of target datas2!")
             break
+
+    outputjson(outarr)
+
+    addupout(outarr)
 
     print("Scraping Over!")
 
