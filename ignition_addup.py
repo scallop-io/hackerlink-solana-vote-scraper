@@ -6,22 +6,34 @@ from datetime import datetime
 
 def main():
 
-    newtxt = open('ignition_asia_tx_new.txt', 'r')
-    oldtxt = open('ignition_asia_tx.txt', 'r')
-    adduptxt = open('ignition_addup_new.txt', 'w+')
+    oldtxjson = open('ignition_list.json', 'r')
+    newtxjson = open('ignition_list_new.json', 'r')
+    addupjson = open('ignition_alltx_new.json', 'w+')
 
-    oldtext = oldtxt.read()
+    with oldtxjson as f:
+        oldlistjson = json.load(f)
 
-    newtext = newtxt.read()
+    with newtxjson as f:
+        newlistjson = json.load(f)
 
-    addup = newtext + oldtext
+    adduplistjson=[]
 
-    print(addup, file=adduptxt)
+    for newtx in newlistjson:
+        adduplistjson.append(newtx)
+    
+    for oldtx in oldlistjson:
+        adduplistjson.append(oldtx)
+   
 
+    newliststr = json.dumps(adduplistjson)
 
-    newtxt.close()
-    oldtxt.close()
-    adduptxt.close()
+    addupjson.write(newliststr)
+
+    print("Add up over!")
+
+    oldtxjson.close()
+    newtxjson.close()
+    addupjson.close()
 
 
 if __name__ == "__main__":

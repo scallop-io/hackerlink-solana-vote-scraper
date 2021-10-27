@@ -10,15 +10,19 @@ https://explorer.solana.com/address/3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
 
 ## How to use
 
+ - Update
+
 `ignition_update.py`
 
 `ignition_addup.py`
 
-`backuptojson.py`
-
 `final_list.py`
 
-And out put is in `ignition_addup_final.txt`
+And output is in `ignition_addup_final.txt`
+
+ - Scrap it from 0 (Don't run it without you must to, it will take a long time!)
+
+ `backup/ignition.py`
 
 ## RPC Node Rate Limits
 

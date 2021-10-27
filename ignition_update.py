@@ -15,6 +15,7 @@ pathtxnew = 'ignition_asia_tx_new.txt'
 pathtxold = 'ignition_asia_tx.txt'
 newtxfile = open(pathtxnew, 'w+')
 
+outarr = []
 
 def noneto0(num):
     try:
@@ -25,7 +26,6 @@ def noneto0(num):
 
 
 def countvoteusdc(votingreq, tx):
-    outarr = []
     if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in votingreq.text:  # If this tx voted USDC for Scallop
         voteresponsejson = json.loads(votingreq.text)
         voteraddress = voteresponsejson["result"]["transaction"]["message"]["accountKeys"][0]
@@ -39,40 +39,64 @@ def countvoteusdc(votingreq, tx):
         txtout = voteraddress, voterusdc*math.pow(10, -6), tx
         print(txtout, file=newtxfile)
 
+
+def outputjson(outarr):
+    backupjson = open('ignition_list_new.json', 'w+')
+    outjson = []
+    for tx in outarr:
+        data = {}
+        data["address"] = tx[0][0]
+        data["VoteUSDC"] = tx[0][1]*math.pow(10, -6)
+        data["signature"] = tx[1]
+        outjson.append(data)
+    output = json.dumps(outjson)
+    backupjson.write(output)
+    backupjson.close()
+
+
 def main():
 
     with backuppath as f:
         listjson = json.load(f)
 
-    newesttx = listjson[0]['signature']
+    newesttx = listjson[0]['signature'][0]
 
-    today = datetime.now()
-    print(today.strftime("%Y-%m-%d %H:%M:%S"))
+    while True:
 
-    data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "until":"'+ newesttx +'"}]}'
+        today = datetime.now()
+        print(today.strftime("%Y-%m-%d %H:%M:%S"))
 
-    req = requests.post(rpcurl, headers=headers, data=data)
-    reqjson = json.loads(req.text)
+        data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "until":"'+ newesttx +'"}]}'
 
-    if len(reqjson["result"]) != 0:
+        req = requests.post(rpcurl, headers=headers, data=data)
+        reqjson = json.loads(req.text)
 
-        for i in range(0, len(reqjson["result"])):
+        try:
+            newesttx = reqjson["result"][0]["signature"]
+        except:
+            print("We've hit the bottom of target datas!")
+            break
 
-            tx = reqjson["result"][i]["signature"]
+        if len(reqjson["result"]) != 0:
 
-            # Only count success transaction.
-            if reqjson["result"][i]["err"] == None:
-                data = '{"jsonrpc":"2.0","method":"getTransaction","id": 1,"params":["' + tx + '","json"]}'
-                datajson = json.loads(data)
-                datajson["params"][0] = tx
-                data = json.dumps(datajson)
-                # Send new req for details.
-                votingreq = requests.post(
-                    rpcurl, headers=headers, data=data)
-                sleep(0.2)
-                # print(votingreq.text)
-                countvoteusdc(votingreq, tx)
+            for i in range(0, len(reqjson["result"])):
 
+                tx = reqjson["result"][i]["signature"]
+
+                # Only count success transaction.
+                if reqjson["result"][i]["err"] == None:
+                    data = '{"jsonrpc":"2.0","method":"getTransaction","id": 1,"params":["' + tx + '","json"]}'
+                    datajson = json.loads(data)
+                    datajson["params"][0] = tx
+                    data = json.dumps(datajson)
+                    # Send new req for details.
+                    votingreq = requests.post(
+                        rpcurl, headers=headers, data=data)
+                    sleep(0.15)
+                    # print(votingreq.text)
+                    countvoteusdc(votingreq, tx)
+
+    outputjson(outarr)
     newtxfile.close()
 
 if __name__ == "__main__":

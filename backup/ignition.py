@@ -134,8 +134,7 @@ def main():
         reqjson = json.loads(req.text)
 
         try:
-            lastesttx = reqjson["result"][len(
-            	reqjson["result"])-1]["signature"]
+            lastesttx = reqjson["result"][0]["signature"]
         except:
             print("We've hit the bottom of target datas!")
             break

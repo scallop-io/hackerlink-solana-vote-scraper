@@ -11,16 +11,14 @@ def main():
 
     addarr = []
 
-    readjsonlist = open('ignition_list.json', 'r')
+    readjsonlist = open('ignition_alltx_new.json', 'r')
     adduptxt = open('ignition_addup_final.txt', 'w+')
 
     with readjsonlist as f:
         listjson = json.load(f)
-    
 
-
-    for address in range(0, len(listjson)):
-        addarr.append(listjson[address]['address'])
+    for address in listjson:
+        addarr.append(address['address'])
 
     addarr = arruni(addarr)
 
@@ -39,6 +37,7 @@ def main():
 
     print(today.strftime("%Y-%m-%d %H:%M:%S"), file=adduptxt)
     print("Voted address:", len(listjson), file=adduptxt)
+    print("Top No.20 voter voted USDC:", outputsort[19][1], file=adduptxt)
 
 
     addupusdc = 0
@@ -48,6 +47,10 @@ def main():
 
     for i in outputsort:
         print(i, file=adduptxt)
+    
+    
+
+    print("Done! Check ignition_addup_final.txt!")
 
 
 if __name__ == "__main__":
