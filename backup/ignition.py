@@ -156,7 +156,7 @@ def main():
                     # Send new req for details.
                     votingreq = requests.post(
                     	rpcurl, headers=headers, data=data)
-                    sleep(0.15)
+                    sleep(0.1)
                     # print(votingreq.text)
 
                     countvoteusdc(votingreq, tx)

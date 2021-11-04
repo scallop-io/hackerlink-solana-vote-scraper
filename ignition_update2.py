@@ -10,6 +10,7 @@ rpcurl = 'https://api.mainnet-beta.solana.com'
 headers = {'Content-Type': 'application/json'}
 
 backuppath = open('ignition_list.json', 'r')
+backupnewpath = open('ignition_list_new.json', 'r')
 
 pathtxnew = 'ignition_asia_tx_new.txt'
 pathtxold = 'ignition_asia_tx.txt'
@@ -43,7 +44,7 @@ def countvoteusdc(votingreq, tx):
 
 
 def outputjson(outarr):
-    backupjson = open('ignition_list_new.json', 'w+')
+    backupjson = open('ignition_list_1104.json', 'w+')
     outjson = []
     for tx in outarr:
         data = {}
@@ -64,20 +65,23 @@ def main():
     with backuppath as f:
         listjson = json.load(f)
 
-    newesttx = listjson[0]['signature'][0]
-    lastesttx = ""
+    with backupnewpath as g:
+        listnewjson = json.load(g)
+
+    untiltx = listjson[0]['signature'][0]
+
+    newesttx = listnewjson[len(listnewjson)-1]['signature'][0]
 
     while True:
 
-        if lastesttx == "":
-            data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "until":"' + newesttx + '"}]}'
-        else:
-            data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "before":"' + lastesttx + '", "until":"' + newesttx + '"}]}'
+        data = '{"jsonrpc":"2.0","id": 1, "method":"getSignaturesForAddress", "params":["' + Voteaccount + '",{"limit":1000, "before":"' + newesttx + '", "until":"' + untiltx + '"}]}'
 
         req = requests.post(rpcurl, headers=headers, data=data)
         reqjson = json.loads(req.text)
 
         try:
+
+            newesttx = reqjson["result"][len(reqjson["result"])-1]["signature"]
 
             if len(reqjson["result"]) != 0:
 
@@ -97,16 +101,20 @@ def main():
                         sleep(0.15)
                         # print(votingreq.text)
                         countvoteusdc(votingreq, tx)
-                        
-            if newesttx in req.text:
-                break
-
         except:
             print("We've hit the bottom of target datas!")
             break
+
     outputjson(outarr)
     newtxfile.close()
 
 
 if __name__ == "__main__":
     main()
+
+
+# {
+#     "jsonrpc": "2.0",
+#     "result": [],
+#     "id": 1
+# }
