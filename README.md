@@ -10,6 +10,8 @@ https://explorer.solana.com/address/3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
 
 ## How to use
 
+`pip install solana`
+
  - Update
 
 `ignition_update.py`

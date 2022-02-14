@@ -4,18 +4,17 @@ import math
 from time import sleep
 from datetime import datetime
 
-Voteaccount = "3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7"
+Voteaccount = "79z4tomHJC63jxxZ9QKyjB8VATFgaPoBjz7nkSnzvdSD"
 
-# Solana Ignition Hackathon East Asia
-# 3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
-# Solana Season Hackathon Asia
-# 437b1PsbmmW8Qi5KcNm8LTqsb4Q5ncvCTpyS3kPa5Yuh
-# Solana Ignition Hackathon East Asia for Dorahacks
+# Solana Riptide Hackathon East Asia
+# 79z4tomHJC63jxxZ9QKyjB8VATFgaPoBjz7nkSnzvdSD
+# Solana Ignition Hackathon East Asia - Dorahacks
 # BVCaVh8mNzYgorruQJ7QvSg4PuggAfdbC71Qu5GNGRA8
 
 headers = {'Content-Type': 'application/json'}
 
-rpcurl = 'https://api.mainnet-beta.solana.com'  # RPC Node URL
+# rpcurl = 'https://api.mainnet-beta.solana.com'  # RPC Node URL 
+rpcurl = 'https://solana-api.projectserum.com'  # RPC Node URL Serum
 
 pathtx = 'ignition_asia_tx.txt'
 pathaddup = 'ignition_asia_addup.txt'
@@ -132,6 +131,10 @@ def main():
 
         req = requests.post(rpcurl, headers=headers, data=data)
         reqjson = json.loads(req.text)
+
+        print((req.text))
+
+        exit()
 
         try:
             lastesttx = reqjson["result"][0]["signature"]
