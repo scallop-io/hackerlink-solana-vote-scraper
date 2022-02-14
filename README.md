@@ -12,19 +12,7 @@ https://explorer.solana.com/address/3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
 
 `pip install solana`
 
- - Update
-
-`ignition_update.py`
-
-`ignition_addup.py`
-
-`final_list.py`
-
-And output is in `ignition_addup_final.txt`
-
- - Scrap it from 0 (Don't run it without you must to, it will take a long time!)
-
- `backup/ignition.py`
+`pyyhon3 riptide.py`
 
 ## RPC Node Rate Limits
 
@@ -40,7 +28,6 @@ https://solana-api.projectserum.com - Project Serum-hosted api node
 
 ## Improvement
 
- - We can use Solana Python SDK.
  - More efficient.
  - More readable.
  - We can use txt to store tx and no need to send many requests every time
