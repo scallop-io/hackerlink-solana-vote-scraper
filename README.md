@@ -12,7 +12,7 @@ https://explorer.solana.com/address/3rXHdF7CfwG6K2VVFpvBRwdbRwyR5Zn7kQhLgxn4mjk7
 
 `pip install solana`
 
-`pyyhon3 riptide.py`
+`python3 riptide.py`
 
 ## RPC Node Rate Limits
 
