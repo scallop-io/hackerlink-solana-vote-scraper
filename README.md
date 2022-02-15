@@ -33,3 +33,7 @@ https://api.mainnet-beta.solana.com - Solana-hosted api node cluster, backed by 
  - More readable.
  - We can use txt to store tx and no need to send many requests every time.
  - CLI version.
+
+## Remark
+
+old/ignition.py is the version without Solana Python SDK.
