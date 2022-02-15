@@ -134,8 +134,6 @@ def main():
 
         print((req.text))
 
-        exit()
-
         try:
             lastesttx = reqjson["result"][0]["signature"]
         except:

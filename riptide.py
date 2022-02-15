@@ -7,7 +7,7 @@ from datetime import datetime
 from solana.rpc.api import Client
 import asyncio
 
-Voteaccount = "79z4tomHJC63jxxZ9QKyjB8VATFgaPoBjz7nkSnzvdSD"
+Voteaccount = "79z4tomHJC63jxxZ9QKyjB8VATFgaPoBjz7nkSnzvdSD" #Scallop voting PDA
 
 pathtx = 'riptide_asia_tx.txt'
 pathaddup = 'riptide_asia_addup.txt'
@@ -82,7 +82,7 @@ def addupout(outarr):
 
 async def main():
 
-    solana_client = Client("https://solana-api.projectserum.com")
+    solana_client = Client("https://api.mainnet-beta.solana.com")
 
     today = datetime.now()
     print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
@@ -98,12 +98,11 @@ async def main():
             # break
             reqjson = solana_client.get_signatures_for_address(Voteaccount, before=lastesttx)
 
-        print(reqjson)
-
-        exit()
+        resultlen = len(reqjson["result"])
 
         try:
-            lastesttx = reqjson["result"][0]["signature"]
+            lastesttx = reqjson["result"][resultlen-1]["signature"]
+
         except:
                 print("We've hit the bottom of target datas!")
                 break
@@ -121,22 +120,33 @@ async def main():
 
                     print(tx)
 
-                    votingreqjson = solana_client.get_transaction("3zUPPexhNt4gRz2mqYvieLsw24rqKDjfzA1vnBgJj4zcQH2tDyaokzFRb5qe2DCGacgfAiZ7peivZarai7Gyqp1F")
+                    votingreqjson = solana_client.get_transaction(tx)
 
-                    print(votingreqjson)
+                    # print(votingreqjson)
 
-                    sleep(0.1)
+                    sleep(0.2)
 
                     if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in json.dumps(votingreqjson):  # If this tx voted USDC for Your Project
 
                         voteraddress = votingreqjson["result"]["transaction"]["message"]["accountKeys"][0]
-                        print(votingreqjson)
+                        
+                        # print(voteraddress)
                         # need to use "amount" * 1/1000000 cuz if using "uiAmount" it won't count decimals.
-                        voterusdcbefore = noneto0(
-                            votingreqjson["result"]["meta"]["preTokenBalances"][0]["uiTokenAmount"]["amount"])
-                        voterusdcafter = noneto0(
-                            votingreqjson["result"]["meta"]["postTokenBalances"][0]["uiTokenAmount"]["amount"])
-                        voterusdc = voterusdcbefore - voterusdcafter
+
+                        try:
+
+                            preBalances = noneto0(votingreqjson["result"]["meta"]["preTokenBalances"][0]["uiTokenAmount"]["amount"])
+                            postBalances = noneto0(votingreqjson["result"]["meta"]["postTokenBalances"][0]["uiTokenAmount"]["amount"])
+
+                        except:
+
+                            print("Captching amount error, Maybe we've hit the bottom.")
+                            break
+
+                        voterusdc = abs(preBalances - postBalances)
+
+                        # print(voterusdc)
+
                         outarr.append([[voteraddress, voterusdc], [tx]])
 
                         txtout = voteraddress, voterusdc*math.pow(10, -6), tx
