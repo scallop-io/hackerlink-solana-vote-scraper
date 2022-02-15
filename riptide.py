@@ -1,5 +1,3 @@
-import solana
-import requests
 import json
 import math
 from time import sleep
@@ -82,7 +80,7 @@ def addupout(outarr):
 
 async def main():
 
-    solana_client = Client("https://api.mainnet-beta.solana.com")
+    solana_client = Client("https://api.mainnet-beta.solana.com") # Don't use Serum RPC
 
     today = datetime.now()
     print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
@@ -126,12 +124,9 @@ async def main():
 
                     sleep(0.2)
 
-                    if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in json.dumps(votingreqjson):  # If this tx voted USDC for Your Project
+                    if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in json.dumps(votingreqjson):  # If this tx voted USDC for Your Project (This should be upgrade!!!)
 
                         voteraddress = votingreqjson["result"]["transaction"]["message"]["accountKeys"][0]
-                        
-                        # print(voteraddress)
-                        # need to use "amount" * 1/1000000 cuz if using "uiAmount" it won't count decimals.
 
                         try:
 
@@ -143,7 +138,7 @@ async def main():
                             print("Captching amount error, Maybe we've hit the bottom.")
                             break
 
-                        voterusdc = abs(preBalances - postBalances)
+                        voterusdc = abs(preBalances - postBalances) #sometimes the order is not correct. so we need to abs().
 
                         # print(voterusdc)
 
@@ -153,7 +148,6 @@ async def main():
                         print(txtout, file=txfile)
 
         else:
-            print("We've hit the bottom of target datas2!")
             break
 
     outputjson(outarr)
@@ -171,5 +165,3 @@ async def main():
 
 
 asyncio.run(main())
-
-
