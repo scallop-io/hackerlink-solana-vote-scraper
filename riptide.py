@@ -5,7 +5,7 @@ from datetime import datetime
 from solana.rpc.api import Client
 import asyncio
 
-Voteaccount = "79z4tomHJC63jxxZ9QKyjB8VATFgaPoBjz7nkSnzvdSD" #Scallop voting PDA
+Voteaccount = "GhJVN91EJ7M68dXDVWoJvNbr5Gsqyb2wyoo8p5G6rRxL"  # Scallop voting PDA
 
 pathtx = 'riptide_asia_tx.txt'
 pathaddup = 'riptide_asia_addup.txt'
@@ -91,10 +91,12 @@ async def main():
     while True:
 
         if lastesttx == "":
-            reqjson = solana_client.get_signatures_for_address(Voteaccount, limit=1000)
+
+            reqjson = solana_client.get_confirmed_signature_for_address2(Voteaccount, limit=1000)
+
         else:
             # break
-            reqjson = solana_client.get_signatures_for_address(Voteaccount, before=lastesttx)
+            reqjson = solana_client.get_confirmed_signature_for_address2(Voteaccount, before=lastesttx)
 
         resultlen = len(reqjson["result"])
 
@@ -118,11 +120,9 @@ async def main():
 
                     print(tx)
 
-                    votingreqjson = solana_client.get_transaction(tx)
+                    votingreqjson = solana_client.get_confirmed_transaction(tx)
 
-                    # print(votingreqjson)
-
-                    sleep(0.2)
+                    sleep(1)
 
                     if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in json.dumps(votingreqjson):  # If this tx voted USDC for Your Project (This should be upgrade!!!)
 
