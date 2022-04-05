@@ -4,8 +4,13 @@ from time import sleep
 from datetime import datetime
 from solana.rpc.api import Client
 import asyncio
+import numpy
 
-Voteaccount = "GhJVN91EJ7M68dXDVWoJvNbr5Gsqyb2wyoo8p5G6rRxL"  # Scallop voting PDA
+Voteaccount = "GhJVN91EJ7M68dXDVWoJvNbr5Gsqyb2wyoo8p5G6rRxL"  # voting PDA ATA
+# Solana Ignition Hackathon East Asia - Dorahacks
+# BVCaVh8mNzYgorruQJ7QvSg4PuggAfdbC71Qu5GNGRA8
+# Solana Riptide Hackathon East Asia - Scallop
+# GhJVN91EJ7M68dXDVWoJvNbr5Gsqyb2wyoo8p5G6rRxL
 
 pathtx = 'riptide_asia_tx.txt'
 pathaddup = 'riptide_asia_addup.txt'
@@ -76,14 +81,14 @@ def addupout(outarr):
     addupusdc = 0
     for addusd in outarr:
         addupusdc += addusd[0][1]
-    print("Add up USDC:", addupusdc*math.pow(10, -6), file=txfile)
+    print("Add up USDC:", addupusdc*math.pow(10, -6), file=addupfile)
 
 async def main():
 
     solana_client = Client("https://api.mainnet-beta.solana.com") # Don't use Serum RPC
 
     today = datetime.now()
-    print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
+    # print(today.strftime("%Y-%m-%d %H:%M:%S"), file=txfile)
     print(today.strftime("%Y-%m-%d %H:%M:%S"), file=addupfile)
 
     lastesttx = ""
@@ -122,7 +127,7 @@ async def main():
 
                     votingreqjson = solana_client.get_confirmed_transaction(tx)
 
-                    sleep(1)
+                    sleep(0.8)
 
                     if "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v" in json.dumps(votingreqjson):  # If this tx voted USDC for Your Project (This should be upgrade!!!)
 
@@ -159,6 +164,8 @@ async def main():
     outputsort = voteoutput(outarr)
     for addressandvote in outputsort:
         print(addressandvote, file=addupfile)
+
+    numpy.save('riptide_array', outputsort)
 
     txfile.close()
     addupfile.close()
