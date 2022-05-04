@@ -21,6 +21,11 @@ def main():
         data["amount"] = 1
         merkle_seagrass_json.append(data)
 
+    with open("seagrass.json", "w+") as MorayJson:
+        data = merkle_seagrass_json
+        json.dump(data, MorayJson)
+
+
     for tx in riptide_array:
         if float(tx[1]) >= 3:
             data = {}
