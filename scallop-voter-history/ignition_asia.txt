@@ -126,7 +126,7 @@ Add up USDC: 30618.400882999566
 ['D6snbru1GcirBcEGsmCGXDi4D49Q5V4m2Nwowhop4MsN', 13.0]
 ['DGYtyVC2kMkR6LSU5VckuBHXKsxhcpMoukWwh9LRf7J', 13.0]
 ['Bf9Udmfm9fdcz6SPdQwStQHo8i15cVmTAEK2DT3gopzD', 13.0]
-['7oHh3jwCGdYj5ixiG8bZmARwTwgPmb56MkooNyzFi3mh', 12.1]
+['7oHh3jwCGdYj5ixiG8bZmARwTwgPmb56MkooNyzFi3mh', 12.1] (refunded)
 ['3EpnUyrAXcUC9wnsLWHD6FGtB2FKn8ELWqviwEdcD9U4', 12.0]
 ['7tmskYN3nAtKmTBXUTGPfVox42E3CWxMb8b6bqfP8vzF', 12.0]
 ['3sVV1fh8x9NPcHXhw7jzUyu6jyCXWLbe3iug1M8kwUix', 12.0]
